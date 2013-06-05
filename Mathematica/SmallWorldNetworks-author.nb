@@ -1,0 +1,1285 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     52414,       1276]
+NotebookOptionsPosition[     48256,       1145]
+NotebookOutlinePosition[     49855,       1195]
+CellTagsIndexPosition[     49527,       1183]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Small World Networks", "DemoTitle",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.452377201828125*^9, 3.452377206515625*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["", "InitializationSection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"bezieredge", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pts", ",", "angle"}], "}"}], ",", 
+     RowBox[{"BezierCurve", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"pts", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"pts", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "-", 
+         RowBox[{
+          RowBox[{"(", GridBox[{
+             {
+              RowBox[{"Cos", "[", "angle", "]"}], 
+              RowBox[{"Sin", "[", "angle", "]"}]},
+             {
+              RowBox[{"-", 
+               RowBox[{"Sin", "[", "angle", "]"}]}], 
+              RowBox[{"Cos", "[", "angle", "]"}]}
+            }], ")"}], ".", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"pts", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "-", 
+            RowBox[{"pts", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], 
+           RowBox[{"2", " ", 
+            RowBox[{"Cos", "[", "angle", "]"}]}]]}]}], " ", ",", 
+        RowBox[{"pts", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "}"}], "]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.4523047829224844`*^9, 3.4523048451568594`*^9, {3.4523052464381094`*^9, 
+   3.4523052588912344`*^9}, 3.4523053211256094`*^9, {3.4523094303912344`*^9, 
+   3.4523094999068594`*^9}, {3.4523096324693594`*^9, 
+   3.4523097368599844`*^9}, {3.4523097751724844`*^9, 
+   3.4523098202662344`*^9}, {3.4523098614849844`*^9, 
+   3.4523099860006094`*^9}, {3.4523100586724844`*^9, 
+   3.4523101299693594`*^9}, {3.4523101661256094`*^9, 
+   3.4523101924537344`*^9}, {3.4523102771099844`*^9, 3.4523103782506094`*^9}, 
+   3.4523104138599844`*^9, {3.4523104454537344`*^9, 3.4523104506568594`*^9}, {
+   3.4523104958443594`*^9, 3.4523106047974844`*^9}, {3.4523107455006094`*^9, 
+   3.4523108150162344`*^9}, {3.4523108675006094`*^9, 
+   3.4523108979224844`*^9}, {3.4523109485943594`*^9, 3.4523109723131094`*^9}, 
+   3.4523128372193594`*^9},
+ CellID->135508881],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"circleedge", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", "pts", "}"}], ",", 
+     RowBox[{"Circle", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"pts", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "+", 
+          RowBox[{"pts", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "/", "2"}], ",", 
+       FractionBox[
+        RowBox[{"Norm", "[", 
+         RowBox[{
+          RowBox[{"pts", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "-", 
+          RowBox[{"pts", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "2"], " ", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"ArcTan", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pts", "[", 
+             RowBox[{"[", 
+              RowBox[{"2", ",", "1"}], "]"}], "]"}], "-", 
+            RowBox[{"pts", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"pts", "[", 
+             RowBox[{"[", 
+              RowBox[{"2", ",", "2"}], "]"}], "]"}], "-", 
+            RowBox[{"pts", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "2"}], "]"}], "]"}]}]}], "]"}], ",", 
+         RowBox[{"\[Pi]", "+", 
+          RowBox[{"ArcTan", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"pts", "[", 
+              RowBox[{"[", 
+               RowBox[{"2", ",", "1"}], "]"}], "]"}], "-", 
+             RowBox[{"pts", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"pts", "[", 
+              RowBox[{"[", 
+               RowBox[{"2", ",", "2"}], "]"}], "]"}], "-", 
+             RowBox[{"pts", "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "2"}], "]"}], "]"}]}]}], "]"}]}]}], "}"}]}], 
+      "]"}]}], "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.4523063981724844`*^9, 3.4523064024381094`*^9}, {
+   3.4523064655162344`*^9, 3.4523065071099844`*^9}, {3.4523067520631094`*^9, 
+   3.4523067722037344`*^9}, {3.4523068212193594`*^9, 
+   3.4523068355318594`*^9}, {3.4523069148287344`*^9, 
+   3.4523070215318594`*^9}, {3.4523070687506094`*^9, 
+   3.4523070804224844`*^9}, {3.4523072304693594`*^9, 
+   3.4523072980162344`*^9}, {3.4523073540474844`*^9, 
+   3.4523073573443594`*^9}, {3.4523074476099844`*^9, 
+   3.4523074884537344`*^9}, {3.4523075395318594`*^9, 
+   3.4523075582818594`*^9}, {3.4523076559224844`*^9, 
+   3.4523077164693594`*^9}, {3.4523080176412344`*^9, 
+   3.4523080881099844`*^9}, {3.4523081718756094`*^9, 
+   3.4523081746099844`*^9}, {3.4523082492506094`*^9, 
+   3.4523082710943594`*^9}, {3.4523083504068594`*^9, 
+   3.4523084320943594`*^9}, {3.4523088198131094`*^9, 3.4523088206724844`*^9}, 
+   3.4523128395631094`*^9},
+ CellID->631836993],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"network", "[", 
+   RowBox[{"nodes_", ",", "conn_"}], "]"}], ":=", 
+  RowBox[{"Flatten", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"i", "\[Rule]", 
+        RowBox[{"Mod", "[", 
+         RowBox[{
+          RowBox[{"i", "+", "j"}], ",", "nodes", ",", "1"}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"j", "\[GreaterEqual]", 
+            RowBox[{"Quotient", "[", 
+             RowBox[{
+              RowBox[{"nodes", "+", "1"}], ",", "2"}], "]"}]}], ",", 
+           FractionBox["nodes", "2"], ",", "nodes"}], "]"}], ",", "1"}], 
+        "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", 
+       RowBox[{"conn", "-", "1"}], ",", "1"}], "}"}]}], "]"}], 
+   "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.4523030719068594`*^9, 3.4523030957818594`*^9}, {
+   3.4523031365943594`*^9, 3.4523032050318594`*^9}, {3.4523033517193594`*^9, 
+   3.4523033517974844`*^9}, {3.4523034423131094`*^9, 
+   3.4523034498912344`*^9}, {3.4523035450006094`*^9, 
+   3.4523035465787344`*^9}, {3.4523035820943594`*^9, 
+   3.4523035869849844`*^9}, {3.4523111070318594`*^9, 
+   3.4523111104849844`*^9}, {3.452374682*^9, 3.45237469453125*^9}, 
+   3.452374725109375*^9, 3.4525602205625*^9},
+ CellID->65729260],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"rewirednetwork", "[", 
+   RowBox[{"p_", ",", "network_"}], "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"RandomReal", "[", "]"}], ">", "p"}], ",", 
+      RowBox[{"network", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"network", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", 
+       RowBox[{"RandomChoice", "[", 
+        RowBox[{"Cases", "[", 
+         RowBox[{
+          RowBox[{"network", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", "2"}], "]"}], "]"}], ",", 
+          RowBox[{"Except", "[", 
+           RowBox[{
+            RowBox[{"network", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "]"}], "]"}]}]}], "]"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", 
+      RowBox[{
+       RowBox[{"Dimensions", "[", "network", "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.4523125441099844`*^9, 3.4523126037037344`*^9}, 
+   3.4523126477349844`*^9, {3.4523127658443594`*^9, 3.4523127756256094`*^9}, {
+   3.4523131669849844`*^9, 3.4523131830006094`*^9}, {3.4523135137506094`*^9, 
+   3.4523135568287344`*^9}, {3.4523136842818594`*^9, 
+   3.4523137173443594`*^9}, {3.4523138765006094`*^9, 
+   3.4523138792818594`*^9}, {3.45237476390625*^9, 3.452374772984375*^9}},
+ CellID->100033730]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateSection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"connections", ">", 
+       RowBox[{
+        RowBox[{"Quotient", "[", 
+         RowBox[{"nodes", ",", "2"}], "]"}], "+", "1"}]}], ",", 
+      RowBox[{"connections", "=", 
+       RowBox[{
+        RowBox[{"Quotient", "[", 
+         RowBox[{"nodes", ",", "2"}], "]"}], "+", "1"}]}]}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"GraphPlot", "[", 
+     RowBox[{
+      RowBox[{"rewirednetwork", "[", 
+       RowBox[{"p", ",", 
+        RowBox[{"network", "[", 
+         RowBox[{"nodes", ",", "connections"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Method", "\[Rule]", "\"\<CircularEmbedding\>\""}], ",", 
+      RowBox[{"DirectedEdges", "\[Rule]", "False"}], ",", 
+      RowBox[{"VertexLabeling", "\[Rule]", "True"}], ",", 
+      RowBox[{"EdgeRenderingFunction", "\[Rule]", 
+       RowBox[{"Switch", "[", 
+        RowBox[{"edge", ",", "1", ",", 
+         RowBox[{
+          RowBox[{"bezieredge", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"30", "Degree"}]}], "]"}], "&"}], ",", "2", ",", 
+         RowBox[{
+          RowBox[{"circleedge", "[", "#", "]"}], "&"}], ",", "3", ",", 
+         "Automatic"}], "]"}]}], ",", 
+      RowBox[{"ImageSize", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"400", ",", "400"}], "}"}]}], ",", 
+      RowBox[{"MultiedgeStyle", "\[Rule]", "False"}]}], "]"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"p", ",", "0", ",", "1", ",", "0.001", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"nodes", ",", "3", ",", "75", ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"connections", ",", "2", ",", 
+     RowBox[{"Dynamic", "[", 
+      RowBox[{
+       RowBox[{"Quotient", "[", 
+        RowBox[{"nodes", ",", "2"}], "]"}], "+", "1"}], "]"}], ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"edge", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "\[Rule]", "\"\<Bezier edge\>\""}], ",", 
+       RowBox[{"2", "\[Rule]", "\"\<circle edge\>\""}], ",", 
+       RowBox[{"3", "\[Rule]", "\"\<automatic\>\""}]}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"AutorunSequencing", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2", ",", "4"}], "}"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.45237632196875*^9, {3.452458333571336*^9, 
+   3.4524585265086274`*^9}, {3.4524585572737036`*^9, 
+   3.4524585616331396`*^9}, {3.4525602740625*^9, 3.4525602761875*^9}, {
+   3.452560648234375*^9, 3.452560650890625*^9}, {3.45256068175*^9, 
+   3.452560686453125*^9}, {3.452561022296875*^9, 3.452561029515625*^9}, 
+   3.45256109115625*^9, {3.45256127434375*^9, 3.452561274453125*^9}, 
+   3.452562127765625*^9, {3.4528680695096965`*^9, 3.452868085993696*^9}, {
+   3.452868439359352*^9, 3.4528684567910953`*^9}, {3.452868510707486*^9, 
+   3.4528685225166674`*^9}, {3.452870001024503*^9, 3.452870001141515*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`connections$$ = 2, $CellContext`edge$$ = 
+    1, $CellContext`nodes$$ = 3, $CellContext`p$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`p$$], 0, 1, 0.001}, {
+      Hold[$CellContext`nodes$$], 3, 75, 1}, {
+      Hold[$CellContext`connections$$], 2, 
+      Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1}, {{
+       Hold[$CellContext`edge$$], 1}, {
+      1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`p$366493$$ = 0, $CellContext`nodes$366494$$ = 
+    0, $CellContext`connections$366495$$ = 0, $CellContext`edge$366496$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`connections$$ = 2, $CellContext`edge$$ = 
+        1, $CellContext`nodes$$ = 3, $CellContext`p$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$366493$$, 0], 
+        Hold[$CellContext`nodes$$, $CellContext`nodes$366494$$, 0], 
+        Hold[$CellContext`connections$$, $CellContext`connections$366495$$, 
+         0], 
+        Hold[$CellContext`edge$$, $CellContext`edge$366496$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (
+       If[$CellContext`connections$$ > 
+         Quotient[$CellContext`nodes$$, 2] + 1, $CellContext`connections$$ = 
+         Quotient[$CellContext`nodes$$, 2] + 1]; GraphPlot[
+         $CellContext`rewirednetwork[$CellContext`p$$, 
+          $CellContext`network[$CellContext`nodes$$, \
+$CellContext`connections$$]], Method -> "CircularEmbedding", DirectedEdges -> 
+         False, VertexLabeling -> True, EdgeRenderingFunction -> 
+         Switch[$CellContext`edge$$, 
+           1, $CellContext`bezieredge[#, 30 Degree]& , 
+           2, $CellContext`circleedge[#]& , 3, Automatic], 
+         ImageSize -> {400, 400}, MultiedgeStyle -> False]), 
+      "Specifications" :> {{$CellContext`p$$, 0, 1, 0.001, Appearance -> 
+         "Labeled"}, {$CellContext`nodes$$, 3, 75, 1, Appearance -> 
+         "Labeled"}, {$CellContext`connections$$, 2, 
+         Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1, Appearance -> 
+         "Labeled"}, {{$CellContext`edge$$, 1}, {
+         1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+      "Options" :> {AutorunSequencing -> {1, 2, 4}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{449., {283., 288.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`rewirednetwork[
+         Pattern[$CellContext`p, 
+          Blank[]], 
+         Pattern[$CellContext`network, 
+          Blank[]]] := Table[
+         If[RandomReal[] > $CellContext`p, 
+          Part[$CellContext`network, $CellContext`i], Part[
+            Part[$CellContext`network, $CellContext`i], 1] -> RandomChoice[
+            Cases[
+             Part[$CellContext`network, All, 2], 
+             Except[
+              Part[
+               Part[$CellContext`network, $CellContext`i], 
+               1]]]]], {$CellContext`i, 
+          Part[
+           Dimensions[$CellContext`network], 1]}], $CellContext`network[
+         Pattern[$CellContext`nodes, 
+          Blank[]], 
+         Pattern[$CellContext`conn, 
+          Blank[]]] := Flatten[
+         Table[
+          
+          Table[$CellContext`i -> 
+           Mod[$CellContext`i + $CellContext`j, $CellContext`nodes, 
+             1], {$CellContext`i, 1, 
+            If[$CellContext`j >= 
+             Quotient[$CellContext`nodes + 1, 2], $CellContext`nodes/
+             2, $CellContext`nodes], 1}], {$CellContext`j, 
+           1, $CellContext`conn - 1, 1}]], $CellContext`bezieredge = 
+       Function[{$CellContext`pts, $CellContext`angle}, 
+         BezierCurve[{
+           Part[$CellContext`pts, 1], Part[$CellContext`pts, 2] - Dot[{{
+              Cos[$CellContext`angle], 
+              Sin[$CellContext`angle]}, {-Sin[$CellContext`angle], 
+              Cos[$CellContext`angle]}}, (Part[$CellContext`pts, 2] - 
+             Part[$CellContext`pts, 1])/(2 Cos[$CellContext`angle])], 
+           Part[$CellContext`pts, 2]}]], $CellContext`circleedge = 
+       Function[{$CellContext`pts}, 
+         Circle[(Part[$CellContext`pts, 1] + Part[$CellContext`pts, 2])/2, 
+          Norm[Part[$CellContext`pts, 1] - Part[$CellContext`pts, 2]]/2, {
+           ArcTan[
+           Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1], 
+            Part[$CellContext`pts, 2, 2] - Part[$CellContext`pts, 1, 2]], Pi + 
+           ArcTan[Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1],
+              Part[$CellContext`pts, 2, 2] - 
+             Part[$CellContext`pts, 1, 2]]}]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->221106652]
+}, {2}]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateCaptionSection"],
+
+Cell[TextData[{
+ "A small world network is created by means of rewiring a network. Each node \
+is randomly selected for rewiring with probability ",
+ Cell[BoxData[
+  FormBox["P", TraditionalForm]], "InlineMath",
+  FormatType->"TraditionalForm"],
+ ". "
+}], "ManipulateCaption",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.452376324859375*^9, 3.452376380625*^9}, {
+   3.4524588923082037`*^9, 3.4524589063276052`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ThumbnailSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`connections$$ = 8, $CellContext`edge$$ = 
+    3, $CellContext`nodes$$ = 15, $CellContext`p$$ = 0., Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`p$$], 0.}, 0, 1, 0.001}, {{
+       Hold[$CellContext`nodes$$], 15}, 3, 75, 1}, {{
+       Hold[$CellContext`connections$$], 8}, 2, 
+      Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1}, {{
+       Hold[$CellContext`edge$$], 3}, {
+      1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`p$366563$$ = 0, $CellContext`nodes$366564$$ = 
+    0, $CellContext`connections$366565$$ = 0, $CellContext`edge$366566$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`connections$$ = 8, $CellContext`edge$$ = 
+        3, $CellContext`nodes$$ = 15, $CellContext`p$$ = 0.}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$366563$$, 0], 
+        Hold[$CellContext`nodes$$, $CellContext`nodes$366564$$, 0], 
+        Hold[$CellContext`connections$$, $CellContext`connections$366565$$, 
+         0], 
+        Hold[$CellContext`edge$$, $CellContext`edge$366566$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (
+       If[$CellContext`connections$$ > 
+         Quotient[$CellContext`nodes$$, 2] + 1, $CellContext`connections$$ = 
+         Quotient[$CellContext`nodes$$, 2] + 1]; GraphPlot[
+         $CellContext`rewirednetwork[$CellContext`p$$, 
+          $CellContext`network[$CellContext`nodes$$, \
+$CellContext`connections$$]], Method -> "CircularEmbedding", DirectedEdges -> 
+         False, VertexLabeling -> True, EdgeRenderingFunction -> 
+         Switch[$CellContext`edge$$, 
+           1, $CellContext`bezieredge[#, 30 Degree]& , 
+           2, $CellContext`circleedge[#]& , 3, Automatic], 
+         ImageSize -> {400, 400}, MultiedgeStyle -> False]), 
+      "Specifications" :> {{{$CellContext`p$$, 0.}, 0, 1, 0.001, Appearance -> 
+         "Labeled"}, {{$CellContext`nodes$$, 15}, 3, 75, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`connections$$, 8}, 2, 
+         Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1, Appearance -> 
+         "Labeled"}, {{$CellContext`edge$$, 3}, {
+         1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+      "Options" :> {AutorunSequencing -> {1, 2, 4}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{449., {283., 288.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`rewirednetwork[
+         Pattern[$CellContext`p, 
+          Blank[]], 
+         Pattern[$CellContext`network, 
+          Blank[]]] := Table[
+         If[RandomReal[] > $CellContext`p, 
+          Part[$CellContext`network, $CellContext`i], Part[
+            Part[$CellContext`network, $CellContext`i], 1] -> RandomChoice[
+            Cases[
+             Part[$CellContext`network, All, 2], 
+             Except[
+              Part[
+               Part[$CellContext`network, $CellContext`i], 
+               1]]]]], {$CellContext`i, 
+          Part[
+           Dimensions[$CellContext`network], 1]}], $CellContext`network[
+         Pattern[$CellContext`nodes, 
+          Blank[]], 
+         Pattern[$CellContext`conn, 
+          Blank[]]] := Flatten[
+         Table[
+          
+          Table[$CellContext`i -> 
+           Mod[$CellContext`i + $CellContext`j, $CellContext`nodes, 
+             1], {$CellContext`i, 1, 
+            If[$CellContext`j >= 
+             Quotient[$CellContext`nodes + 1, 2], $CellContext`nodes/
+             2, $CellContext`nodes], 1}], {$CellContext`j, 
+           1, $CellContext`conn - 1, 1}]], $CellContext`bezieredge = 
+       Function[{$CellContext`pts, $CellContext`angle}, 
+         BezierCurve[{
+           Part[$CellContext`pts, 1], Part[$CellContext`pts, 2] - Dot[{{
+              Cos[$CellContext`angle], 
+              Sin[$CellContext`angle]}, {-Sin[$CellContext`angle], 
+              Cos[$CellContext`angle]}}, (Part[$CellContext`pts, 2] - 
+             Part[$CellContext`pts, 1])/(2 Cos[$CellContext`angle])], 
+           Part[$CellContext`pts, 2]}]], $CellContext`circleedge = 
+       Function[{$CellContext`pts}, 
+         Circle[(Part[$CellContext`pts, 1] + Part[$CellContext`pts, 2])/2, 
+          Norm[Part[$CellContext`pts, 1] - Part[$CellContext`pts, 2]]/2, {
+           ArcTan[
+           Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1], 
+            Part[$CellContext`pts, 2, 2] - Part[$CellContext`pts, 1, 2]], Pi + 
+           ArcTan[Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1],
+              Part[$CellContext`pts, 2, 2] - 
+             Part[$CellContext`pts, 1, 2]]}]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->79457450]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SnapshotsSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`connections$$ = 5, $CellContext`edge$$ = 
+    3, $CellContext`nodes$$ = 9, $CellContext`p$$ = 0.032, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`p$$], 0.032}, 0, 1, 0.001}, {{
+       Hold[$CellContext`nodes$$], 9}, 3, 75, 1}, {{
+       Hold[$CellContext`connections$$], 5}, 2, 
+      Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1}, {{
+       Hold[$CellContext`edge$$], 3}, {
+      1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`p$366633$$ = 0, $CellContext`nodes$366634$$ = 
+    0, $CellContext`connections$366635$$ = 0, $CellContext`edge$366636$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`connections$$ = 5, $CellContext`edge$$ = 
+        3, $CellContext`nodes$$ = 9, $CellContext`p$$ = 0.032}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$366633$$, 0], 
+        Hold[$CellContext`nodes$$, $CellContext`nodes$366634$$, 0], 
+        Hold[$CellContext`connections$$, $CellContext`connections$366635$$, 
+         0], 
+        Hold[$CellContext`edge$$, $CellContext`edge$366636$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (
+       If[$CellContext`connections$$ > 
+         Quotient[$CellContext`nodes$$, 2] + 1, $CellContext`connections$$ = 
+         Quotient[$CellContext`nodes$$, 2] + 1]; GraphPlot[
+         $CellContext`rewirednetwork[$CellContext`p$$, 
+          $CellContext`network[$CellContext`nodes$$, \
+$CellContext`connections$$]], Method -> "CircularEmbedding", DirectedEdges -> 
+         False, VertexLabeling -> True, EdgeRenderingFunction -> 
+         Switch[$CellContext`edge$$, 
+           1, $CellContext`bezieredge[#, 30 Degree]& , 
+           2, $CellContext`circleedge[#]& , 3, Automatic], 
+         ImageSize -> {400, 400}, MultiedgeStyle -> False]), 
+      "Specifications" :> {{{$CellContext`p$$, 0.032}, 0, 1, 0.001, 
+         Appearance -> "Labeled"}, {{$CellContext`nodes$$, 9}, 3, 75, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`connections$$, 5}, 2, 
+         Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1, Appearance -> 
+         "Labeled"}, {{$CellContext`edge$$, 3}, {
+         1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+      "Options" :> {AutorunSequencing -> {1, 2, 4}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{449., {283., 288.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`rewirednetwork[
+         Pattern[$CellContext`p, 
+          Blank[]], 
+         Pattern[$CellContext`network, 
+          Blank[]]] := Table[
+         If[RandomReal[] > $CellContext`p, 
+          Part[$CellContext`network, $CellContext`i], Part[
+            Part[$CellContext`network, $CellContext`i], 1] -> RandomChoice[
+            Cases[
+             Part[$CellContext`network, All, 2], 
+             Except[
+              Part[
+               Part[$CellContext`network, $CellContext`i], 
+               1]]]]], {$CellContext`i, 
+          Part[
+           Dimensions[$CellContext`network], 1]}], $CellContext`network[
+         Pattern[$CellContext`nodes, 
+          Blank[]], 
+         Pattern[$CellContext`conn, 
+          Blank[]]] := Flatten[
+         Table[
+          
+          Table[$CellContext`i -> 
+           Mod[$CellContext`i + $CellContext`j, $CellContext`nodes, 
+             1], {$CellContext`i, 1, 
+            If[$CellContext`j >= 
+             Quotient[$CellContext`nodes + 1, 2], $CellContext`nodes/
+             2, $CellContext`nodes], 1}], {$CellContext`j, 
+           1, $CellContext`conn - 1, 1}]], $CellContext`bezieredge = 
+       Function[{$CellContext`pts, $CellContext`angle}, 
+         BezierCurve[{
+           Part[$CellContext`pts, 1], Part[$CellContext`pts, 2] - Dot[{{
+              Cos[$CellContext`angle], 
+              Sin[$CellContext`angle]}, {-Sin[$CellContext`angle], 
+              Cos[$CellContext`angle]}}, (Part[$CellContext`pts, 2] - 
+             Part[$CellContext`pts, 1])/(2 Cos[$CellContext`angle])], 
+           Part[$CellContext`pts, 2]}]], $CellContext`circleedge = 
+       Function[{$CellContext`pts}, 
+         Circle[(Part[$CellContext`pts, 1] + Part[$CellContext`pts, 2])/2, 
+          Norm[Part[$CellContext`pts, 1] - Part[$CellContext`pts, 2]]/2, {
+           ArcTan[
+           Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1], 
+            Part[$CellContext`pts, 2, 2] - Part[$CellContext`pts, 1, 2]], Pi + 
+           ArcTan[Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1],
+              Part[$CellContext`pts, 2, 2] - 
+             Part[$CellContext`pts, 1, 2]]}]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->551681117],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`connections$$ = 4, $CellContext`edge$$ = 
+    1, $CellContext`nodes$$ = 11, $CellContext`p$$ = 0.09, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`p$$], 0.09}, 0, 1, 0.001}, {{
+       Hold[$CellContext`nodes$$], 11}, 3, 75, 1}, {{
+       Hold[$CellContext`connections$$], 4}, 2, 
+      Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1}, {{
+       Hold[$CellContext`edge$$], 1}, {
+      1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`p$366703$$ = 0, $CellContext`nodes$366704$$ = 
+    0, $CellContext`connections$366705$$ = 0, $CellContext`edge$366706$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`connections$$ = 4, $CellContext`edge$$ = 
+        1, $CellContext`nodes$$ = 11, $CellContext`p$$ = 0.09}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$366703$$, 0], 
+        Hold[$CellContext`nodes$$, $CellContext`nodes$366704$$, 0], 
+        Hold[$CellContext`connections$$, $CellContext`connections$366705$$, 
+         0], 
+        Hold[$CellContext`edge$$, $CellContext`edge$366706$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (
+       If[$CellContext`connections$$ > 
+         Quotient[$CellContext`nodes$$, 2] + 1, $CellContext`connections$$ = 
+         Quotient[$CellContext`nodes$$, 2] + 1]; GraphPlot[
+         $CellContext`rewirednetwork[$CellContext`p$$, 
+          $CellContext`network[$CellContext`nodes$$, \
+$CellContext`connections$$]], Method -> "CircularEmbedding", DirectedEdges -> 
+         False, VertexLabeling -> True, EdgeRenderingFunction -> 
+         Switch[$CellContext`edge$$, 
+           1, $CellContext`bezieredge[#, 30 Degree]& , 
+           2, $CellContext`circleedge[#]& , 3, Automatic], 
+         ImageSize -> {400, 400}, MultiedgeStyle -> False]), 
+      "Specifications" :> {{{$CellContext`p$$, 0.09}, 0, 1, 0.001, Appearance -> 
+         "Labeled"}, {{$CellContext`nodes$$, 11}, 3, 75, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`connections$$, 4}, 2, 
+         Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1, Appearance -> 
+         "Labeled"}, {{$CellContext`edge$$, 1}, {
+         1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+      "Options" :> {AutorunSequencing -> {1, 2, 4}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{449., {283., 288.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`rewirednetwork[
+         Pattern[$CellContext`p, 
+          Blank[]], 
+         Pattern[$CellContext`network, 
+          Blank[]]] := Table[
+         If[RandomReal[] > $CellContext`p, 
+          Part[$CellContext`network, $CellContext`i], Part[
+            Part[$CellContext`network, $CellContext`i], 1] -> RandomChoice[
+            Cases[
+             Part[$CellContext`network, All, 2], 
+             Except[
+              Part[
+               Part[$CellContext`network, $CellContext`i], 
+               1]]]]], {$CellContext`i, 
+          Part[
+           Dimensions[$CellContext`network], 1]}], $CellContext`network[
+         Pattern[$CellContext`nodes, 
+          Blank[]], 
+         Pattern[$CellContext`conn, 
+          Blank[]]] := Flatten[
+         Table[
+          
+          Table[$CellContext`i -> 
+           Mod[$CellContext`i + $CellContext`j, $CellContext`nodes, 
+             1], {$CellContext`i, 1, 
+            If[$CellContext`j >= 
+             Quotient[$CellContext`nodes + 1, 2], $CellContext`nodes/
+             2, $CellContext`nodes], 1}], {$CellContext`j, 
+           1, $CellContext`conn - 1, 1}]], $CellContext`bezieredge = 
+       Function[{$CellContext`pts, $CellContext`angle}, 
+         BezierCurve[{
+           Part[$CellContext`pts, 1], Part[$CellContext`pts, 2] - Dot[{{
+              Cos[$CellContext`angle], 
+              Sin[$CellContext`angle]}, {-Sin[$CellContext`angle], 
+              Cos[$CellContext`angle]}}, (Part[$CellContext`pts, 2] - 
+             Part[$CellContext`pts, 1])/(2 Cos[$CellContext`angle])], 
+           Part[$CellContext`pts, 2]}]], $CellContext`circleedge = 
+       Function[{$CellContext`pts}, 
+         Circle[(Part[$CellContext`pts, 1] + Part[$CellContext`pts, 2])/2, 
+          Norm[Part[$CellContext`pts, 1] - Part[$CellContext`pts, 2]]/2, {
+           ArcTan[
+           Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1], 
+            Part[$CellContext`pts, 2, 2] - Part[$CellContext`pts, 1, 2]], Pi + 
+           ArcTan[Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1],
+              Part[$CellContext`pts, 2, 2] - 
+             Part[$CellContext`pts, 1, 2]]}]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->154219365],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`connections$$ = 5, $CellContext`edge$$ = 
+    1, $CellContext`nodes$$ = 30, $CellContext`p$$ = 0.836, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`p$$], 0.836}, 0, 1, 0.001}, {{
+       Hold[$CellContext`nodes$$], 30}, 3, 75, 1}, {{
+       Hold[$CellContext`connections$$], 5}, 2, 
+      Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1}, {{
+       Hold[$CellContext`edge$$], 1}, {
+      1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`p$366773$$ = 0, $CellContext`nodes$366774$$ = 
+    0, $CellContext`connections$366775$$ = 0, $CellContext`edge$366776$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`connections$$ = 5, $CellContext`edge$$ = 
+        1, $CellContext`nodes$$ = 30, $CellContext`p$$ = 0.836}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$366773$$, 0], 
+        Hold[$CellContext`nodes$$, $CellContext`nodes$366774$$, 0], 
+        Hold[$CellContext`connections$$, $CellContext`connections$366775$$, 
+         0], 
+        Hold[$CellContext`edge$$, $CellContext`edge$366776$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (
+       If[$CellContext`connections$$ > 
+         Quotient[$CellContext`nodes$$, 2] + 1, $CellContext`connections$$ = 
+         Quotient[$CellContext`nodes$$, 2] + 1]; GraphPlot[
+         $CellContext`rewirednetwork[$CellContext`p$$, 
+          $CellContext`network[$CellContext`nodes$$, \
+$CellContext`connections$$]], Method -> "CircularEmbedding", DirectedEdges -> 
+         False, VertexLabeling -> True, EdgeRenderingFunction -> 
+         Switch[$CellContext`edge$$, 
+           1, $CellContext`bezieredge[#, 30 Degree]& , 
+           2, $CellContext`circleedge[#]& , 3, Automatic], 
+         ImageSize -> {400, 400}, MultiedgeStyle -> False]), 
+      "Specifications" :> {{{$CellContext`p$$, 0.836}, 0, 1, 0.001, 
+         Appearance -> "Labeled"}, {{$CellContext`nodes$$, 30}, 3, 75, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`connections$$, 5}, 2, 
+         Dynamic[Quotient[$CellContext`nodes$$, 2] + 1], 1, Appearance -> 
+         "Labeled"}, {{$CellContext`edge$$, 1}, {
+         1 -> "Bezier edge", 2 -> "circle edge", 3 -> "automatic"}}}, 
+      "Options" :> {AutorunSequencing -> {1, 2, 4}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{449., {283., 288.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`rewirednetwork[
+         Pattern[$CellContext`p, 
+          Blank[]], 
+         Pattern[$CellContext`network, 
+          Blank[]]] := Table[
+         If[RandomReal[] > $CellContext`p, 
+          Part[$CellContext`network, $CellContext`i], Part[
+            Part[$CellContext`network, $CellContext`i], 1] -> RandomChoice[
+            Cases[
+             Part[$CellContext`network, All, 2], 
+             Except[
+              Part[
+               Part[$CellContext`network, $CellContext`i], 
+               1]]]]], {$CellContext`i, 
+          Part[
+           Dimensions[$CellContext`network], 1]}], $CellContext`network[
+         Pattern[$CellContext`nodes, 
+          Blank[]], 
+         Pattern[$CellContext`conn, 
+          Blank[]]] := Flatten[
+         Table[
+          
+          Table[$CellContext`i -> 
+           Mod[$CellContext`i + $CellContext`j, $CellContext`nodes, 
+             1], {$CellContext`i, 1, 
+            If[$CellContext`j >= 
+             Quotient[$CellContext`nodes + 1, 2], $CellContext`nodes/
+             2, $CellContext`nodes], 1}], {$CellContext`j, 
+           1, $CellContext`conn - 1, 1}]], $CellContext`bezieredge = 
+       Function[{$CellContext`pts, $CellContext`angle}, 
+         BezierCurve[{
+           Part[$CellContext`pts, 1], Part[$CellContext`pts, 2] - Dot[{{
+              Cos[$CellContext`angle], 
+              Sin[$CellContext`angle]}, {-Sin[$CellContext`angle], 
+              Cos[$CellContext`angle]}}, (Part[$CellContext`pts, 2] - 
+             Part[$CellContext`pts, 1])/(2 Cos[$CellContext`angle])], 
+           Part[$CellContext`pts, 2]}]], $CellContext`circleedge = 
+       Function[{$CellContext`pts}, 
+         Circle[(Part[$CellContext`pts, 1] + Part[$CellContext`pts, 2])/2, 
+          Norm[Part[$CellContext`pts, 1] - Part[$CellContext`pts, 2]]/2, {
+           ArcTan[
+           Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1], 
+            Part[$CellContext`pts, 2, 2] - Part[$CellContext`pts, 1, 2]], Pi + 
+           ArcTan[Part[$CellContext`pts, 2, 1] - Part[$CellContext`pts, 1, 1],
+              Part[$CellContext`pts, 2, 2] - 
+             Part[$CellContext`pts, 1, 2]]}]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->111334432]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "DetailsSection"],
+
+Cell["", "DetailNotes",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.452376487984375*^9, 3.452376492890625*^9}},
+ CellID->160027340],
+
+Cell[TextData[{
+ "D. J. Watts and S. H. Strogatz, \"Collective Dynamics of Small-World \
+Networks,\" ",
+ StyleBox["Nature, ",
+  FontSlant->"Italic"],
+ StyleBox["393",
+  FontWeight->"Bold"],
+ ", 1998",
+ StyleBox[" ",
+  FontSlant->"Italic"],
+ "pp. 440\[Dash]442."
+}], "DetailNotes",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.4523765146875*^9, 3.45237671659375*^9}, {
+   3.4525350194275217`*^9, 3.4525350246622987`*^9}, {3.4526065862732506`*^9, 
+   3.4526065997268066`*^9}},
+ CellID->451408837]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ControlSuggestionsSection"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Resize Images"]}],
+  "\"Click inside an image to reveal its orange resize frame.\\nDrag any of \
+the orange resize handles to resize the image.\"",
+  TooltipDelay->0.35]], "ControlSuggestions",
+ CellChangeTimes->{3.35696210375764*^9, 3.452458845227496*^9},
+ FontFamily->"Verdana",
+ CellTags->"ResizeImages"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Rotate and Zoom in 3D"]}],
+  RowBox[{
+   "\"Drag a 3D graphic to rotate it. Starting the drag near the center \
+tumbles\\nthe graphic; starting near a corner turns it parallel to the plane \
+of the screen.\\nHold down \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" (or \"", 
+    FrameBox[
+    "Cmd", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" on Mac) and drag up and down to zoom.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"RotateAndZoomIn3D"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Drag Locators"]}],
+  RowBox[{"\"Drag any locator (\"", 
+    GraphicsBox[
+     LocatorBox[
+      Scaled[{0.5, 0.5}]], ImageSize -> 20], 
+    "\", etc.) to move it around.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"DragLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Create and Delete Locators"]}],
+  RowBox[{"\"Insert a new locator in the graphic by holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key\\nand clicking where you want it to be. Delete a locator by \
+clicking it\\nwhile holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" key.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"CreateAndDeleteLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Slider Zoom"]}],
+  RowBox[{"\"Hold down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key while moving a slider to make fine adjustments in the slider \
+value.\\nHold \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" and/or \"", 
+    FrameBox[
+    "Shift", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" at the same time as \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" to make ever finer adjustments.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"SliderZoom"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Gamepad Controls"]}],
+  "\"Control this Demonstration with a gamepad or other\\nhuman interface \
+device connected to your computer.\"",
+  TooltipDelay->0.35]], "ControlSuggestions",
+ CellChangeTimes->{3.35696210375764*^9, 3.3895522232313623`*^9},
+ FontFamily->"Verdana",
+ CellTags->"GamepadControls"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Automatic Animation"]}],
+  RowBox[{"\"Animate a slider in this Demonstration by clicking the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcIKwAgOI/R/IhBKc\n\
+/4EAyGAG0f+nTZsGwgysIJIRKsWKLAXGIHFmEpUgLADxWUAkI24jZs+eTaEt\n\
+IG+wQKRmzJgBlYf5lhEA30OqWA=="], "Graphics", ImageSize -> {9, 9}, ImageMargins -> 
+      0, CellBaseline -> Baseline], BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"button\\nnext to the slider, and then clicking the play button that \
+appears.\\nAnimate all controls by selecting \"", 
+    StyleBox["Autorun", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0, CellBaseline -> Baseline], 
+     BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"AutomaticAnimation"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Bookmark Animation"]}],
+  RowBox[{
+   "\"See a prepared animation of this Demonstration by selecting\\n\"", 
+    StyleBox["Animate Bookmarks", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0, CellBaseline -> Baseline], 
+     BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}],
+  TooltipDelay->0.35]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SearchTermsSection"],
+
+Cell["small world network", "SearchTerms",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.452376724640625*^9, 3.4523767275625*^9}},
+ CellID->48984114]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "RelatedLinksSection"],
+
+Cell[TextData[ButtonBox["Small World Network",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://mathworld.wolfram.com/SmallWorldNetwork.html"], None},
+ ButtonNote->
+  "http://mathworld.wolfram.com/SmallWorldNetwork.html"]], "RelatedLinks",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.4524589304920216`*^9, 3.4524589425062227`*^9}},
+ CellID->321869614]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "AuthorSection"],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Felipe Dimer de Oliveira",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Felipe+Dimer+de+\
+Oliveira"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Felipe+Dimer+de+\
+Oliveira"]
+}], "Author",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.45237673496875*^9, 3.45237674596875*^9}, {
+   3.452458882958269*^9, 3.4524588829592686`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1476, 1014},
+WindowMargins->{{3, Automatic}, {Automatic, 8}},
+FrontEndVersion->"7.0 for Microsoft Windows (64-bit) (February 18, 2009)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "Demonstration.nb", 
+  CharacterEncoding -> "WindowsANSI"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "ResizeImages"->{
+  Cell[41408, 949, 374, 9, 22, "ControlSuggestions",
+   CellTags->"ResizeImages"]},
+ "RotateAndZoomIn3D"->{
+  Cell[41785, 960, 678, 16, 22, "ControlSuggestions",
+   CellTags->"RotateAndZoomIn3D"]},
+ "DragLocators"->{
+  Cell[42466, 978, 340, 11, 22, "ControlSuggestions",
+   CellTags->"DragLocators"]},
+ "CreateAndDeleteLocators"->{
+  Cell[42809, 991, 637, 15, 22, "ControlSuggestions",
+   CellTags->"CreateAndDeleteLocators"]},
+ "SliderZoom"->{
+  Cell[43449, 1008, 844, 21, 22, "ControlSuggestions",
+   CellTags->"SliderZoom"]},
+ "GamepadControls"->{
+  Cell[44296, 1031, 369, 9, 22, "ControlSuggestions",
+   CellTags->"GamepadControls"]},
+ "AutomaticAnimation"->{
+  Cell[44668, 1042, 1464, 31, 22, "ControlSuggestions",
+   CellTags->"AutomaticAnimation"]},
+ "BookmarkAnimation"->{
+  Cell[46135, 1075, 908, 21, 22, "ControlSuggestions",
+   CellTags->"BookmarkAnimation"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"ResizeImages", 48632, 1156},
+ {"RotateAndZoomIn3D", 48740, 1159},
+ {"DragLocators", 48849, 1162},
+ {"CreateAndDeleteLocators", 48964, 1165},
+ {"SliderZoom", 49077, 1168},
+ {"GamepadControls", 49183, 1171},
+ {"AutomaticAnimation", 49296, 1174},
+ {"BookmarkAnimation", 49413, 1177}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 131, 2, 74, "DemoTitle"],
+Cell[CellGroupData[{
+Cell[723, 28, 33, 0, 266, "InitializationSection"],
+Cell[759, 30, 2058, 51, 45, "Input",
+ InitializationCell->True,
+ CellID->135508881],
+Cell[2820, 83, 2910, 75, 90, "Input",
+ InitializationCell->True,
+ CellID->631836993],
+Cell[5733, 160, 1414, 36, 43, "Input",
+ InitializationCell->True,
+ CellID->65729260],
+Cell[7150, 198, 1571, 41, 27, "Input",
+ InitializationCell->True,
+ CellID->100033730]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8758, 244, 29, 0, 188, "ManipulateSection"],
+Cell[CellGroupData[{
+Cell[8812, 248, 3369, 78, 208, "Input"],
+Cell[12184, 328, 5523, 110, 583, "Output",
+ CellID->221106652]
+}, {2}]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17753, 444, 36, 0, 166, "ManipulateCaptionSection"],
+Cell[17792, 446, 417, 10, 23, "ManipulateCaption"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18246, 461, 28, 0, 168, "ThumbnailSection"],
+Cell[18277, 463, 5563, 110, 583, "Output",
+ CellID->79457450]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23877, 578, 28, 0, 138, "SnapshotsSection"],
+Cell[23908, 580, 5572, 110, 583, "Output",
+ CellID->551681117],
+Cell[29483, 692, 5572, 110, 583, "Output",
+ CellID->154219365],
+Cell[35058, 804, 5576, 110, 583, "Output",
+ CellID->111334432]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40671, 919, 26, 0, 332, "DetailsSection"],
+Cell[40700, 921, 133, 3, 22, "DetailNotes",
+ CellID->160027340],
+Cell[40836, 926, 495, 16, 22, "DetailNotes",
+ CellID->451408837]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41368, 947, 37, 0, 120, "ControlSuggestionsSection"],
+Cell[41408, 949, 374, 9, 22, "ControlSuggestions",
+ CellTags->"ResizeImages"],
+Cell[41785, 960, 678, 16, 22, "ControlSuggestions",
+ CellTags->"RotateAndZoomIn3D"],
+Cell[42466, 978, 340, 11, 22, "ControlSuggestions",
+ CellTags->"DragLocators"],
+Cell[42809, 991, 637, 15, 22, "ControlSuggestions",
+ CellTags->"CreateAndDeleteLocators"],
+Cell[43449, 1008, 844, 21, 22, "ControlSuggestions",
+ CellTags->"SliderZoom"],
+Cell[44296, 1031, 369, 9, 22, "ControlSuggestions",
+ CellTags->"GamepadControls"],
+Cell[44668, 1042, 1464, 31, 22, "ControlSuggestions",
+ CellTags->"AutomaticAnimation"],
+Cell[46135, 1075, 908, 21, 22, "ControlSuggestions",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47080, 1101, 30, 0, 152, "SearchTermsSection"],
+Cell[47113, 1103, 149, 3, 22, "SearchTerms",
+ CellID->48984114]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47299, 1111, 31, 0, 138, "RelatedLinksSection"],
+Cell[47333, 1113, 359, 8, 22, "RelatedLinks",
+ CellID->321869614]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47729, 1126, 25, 0, 136, "AuthorSection"],
+Cell[47757, 1128, 471, 13, 22, "Author"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
