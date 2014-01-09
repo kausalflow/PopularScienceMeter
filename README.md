@@ -1,7 +1,7 @@
 PopularScienceMeter
 ===================
 
-A measure of popular science
+A evalution of popular science
 
 
 ## 这是什么
