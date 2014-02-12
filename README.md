@@ -18,6 +18,6 @@ A evalution of popular science
 ## 关于
 
 现在还在讨论阶段，代码还没写。查看讨论请看：
-[https://github.com/emptymalei/PopularScienceMeter/wiki](https://github.com/emptymalei/PopularScienceMeter/wiki)
+[https://github.com/opentf/PopularScienceMeter/wiki](https://github.com/opentf/PopularScienceMeter/wiki)
 
 参与讨论可以在 Issues 中进行。
